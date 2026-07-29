@@ -1,0 +1,169 @@
+:root {
+    /*
+     * Start your redesign here. Changing these values updates every clinic
+     * screen that includes the shared styles partial.
+     */
+    --clinic-primary: #287f78;
+    --clinic-primary-dark: #1e625d;
+    --clinic-accent: #e2a85b;
+    --clinic-background: #f4f8f7;
+    --clinic-surface: #ffffff;
+    --clinic-text: #18312f;
+    --clinic-muted: #6c7d7b;
+    --clinic-border: #dce8e6;
+    --clinic-danger: #b54747;
+    --clinic-radius: 1rem;
+    --clinic-shadow: 0 14px 35px rgba(24, 73, 69, 0.09);
+}
+
+body {
+    background-color: var(--clinic-background) !important;
+    color: var(--clinic-text);
+    font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+.clinic-nav {
+    background: var(--clinic-surface);
+    border-bottom: 1px solid var(--clinic-border);
+}
+
+.clinic-nav a {
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.clinic-brand {
+    color: var(--clinic-text) !important;
+    font-size: 1.2rem;
+    font-weight: 700 !important;
+}
+
+.landing-header {
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid var(--clinic-border);
+}
+
+.landing-hero {
+    display: flex;
+    align-items: center;
+    min-height: calc(100vh - 89px);
+    padding: 5rem 0;
+}
+
+.landing-hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.8rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    max-width: 14ch;
+}
+
+.landing-eyebrow {
+    color: var(--clinic-primary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.landing-lead {
+    color: var(--clinic-muted);
+    font-size: 1.2rem;
+    max-width: 44rem;
+    margin: 1.5rem 0 2rem;
+}
+
+.landing-panel {
+    background: var(--clinic-surface);
+    border: 1px solid var(--clinic-border);
+    border-radius: calc(var(--clinic-radius) * 1.5);
+    box-shadow: var(--clinic-shadow);
+    padding: 2rem;
+}
+
+.landing-feature-list {
+    display: grid;
+    gap: 1rem;
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+}
+
+.landing-feature-list li {
+    border-bottom: 1px solid var(--clinic-border);
+    padding-bottom: 1rem;
+}
+
+.landing-feature-list li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+a {
+    color: var(--clinic-primary);
+}
+
+a:hover {
+    color: var(--clinic-primary-dark);
+}
+
+.card {
+    background: var(--clinic-surface);
+    border: 1px solid var(--clinic-border);
+    border-radius: var(--clinic-radius);
+    box-shadow: var(--clinic-shadow) !important;
+}
+
+.btn {
+    border-radius: 0.7rem;
+    font-weight: 600;
+    padding: 0.65rem 1rem;
+}
+
+.btn-primary {
+    background-color: var(--clinic-primary);
+    border-color: var(--clinic-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--clinic-primary-dark);
+    border-color: var(--clinic-primary-dark);
+}
+
+.btn-outline-primary {
+    border-color: var(--clinic-primary);
+    color: var(--clinic-primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--clinic-primary);
+    border-color: var(--clinic-primary);
+}
+
+.form-control,
+.form-select {
+    border-color: var(--clinic-border);
+    border-radius: 0.7rem;
+    min-height: 2.8rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--clinic-primary);
+    box-shadow: 0 0 0 0.2rem rgba(40, 127, 120, 0.15);
+}
+
+.table {
+    --bs-table-bg: var(--clinic-surface);
+    --bs-table-border-color: var(--clinic-border);
+}
+
+.text-muted {
+    color: var(--clinic-muted) !important;
+}
+
+.alert {
+    border: 0;
+    border-radius: 0.8rem;
+}

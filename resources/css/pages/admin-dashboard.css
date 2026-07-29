@@ -1,0 +1,471 @@
+/* Admin dashboard only: resources/js/react/pages/AdminDashboardPage.jsx */
+@import url('https://fonts.bunny.net/css?family=dm-sans:400,500,600,700|manrope:500,600,700,800');
+
+:root {
+    --admin-ink: #192f2d;
+    --admin-muted: #73817f;
+    --admin-green: #1c8278;
+    --admin-bg: #f3f6f5;
+    --admin-line: #e1e8e6;
+}
+
+body {
+    margin: 0;
+}
+
+.admin-react-page,
+.admin-react-page * {
+    box-sizing: border-box;
+}
+
+.admin-react-page {
+    background: var(--admin-bg);
+    color: var(--admin-ink);
+    display: grid;
+    font-family: "DM Sans", sans-serif;
+    grid-template-columns: 225px minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.admin-react-page a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.admin-react-page svg {
+    fill: none;
+    height: 18px;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+    width: 18px;
+}
+
+.admin-react-sidebar {
+    background: #122e2c;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 27px 17px 22px;
+}
+
+.admin-react-brand {
+    align-items: center;
+    display: flex;
+    font-family: Manrope, sans-serif;
+    font-size: 18px;
+    gap: 11px;
+    letter-spacing: -.04em;
+    padding: 0 9px 38px;
+}
+
+.admin-react-brand span {
+    align-items: center;
+    background: #ddf1ec;
+    border-radius: 10px;
+    color: #11675f;
+    display: flex;
+    font-size: 10px;
+    height: 35px;
+    justify-content: center;
+    width: 35px;
+}
+
+.admin-react-section-label {
+    color: #77918d;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .15em;
+    padding: 0 12px 10px;
+    text-transform: uppercase;
+}
+
+.admin-react-sidebar nav {
+    display: grid;
+    gap: 5px;
+}
+
+.admin-react-sidebar nav a {
+    align-items: center;
+    border-radius: 10px;
+    color: #a9bfbb;
+    display: flex;
+    font-size: 12px;
+    font-weight: 600;
+    gap: 11px;
+    padding: 12px;
+}
+
+.admin-react-sidebar nav a:hover,
+.admin-react-sidebar nav a.active {
+    background: rgba(255, 255, 255, .1);
+    color: white;
+}
+
+.admin-react-user {
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    padding: 18px 8px 0;
+}
+
+.admin-react-user > span {
+    align-items: center;
+    background: #ddf1ec;
+    border-radius: 50%;
+    color: #11675f;
+    display: flex;
+    font-size: 10px;
+    font-weight: 800;
+    height: 36px;
+    justify-content: center;
+    width: 36px;
+}
+
+.admin-react-user > div {
+    display: grid;
+    gap: 2px;
+}
+
+.admin-react-user strong {
+    font-size: 11px;
+}
+
+.admin-react-user small {
+    color: #829d98;
+    font-size: 9px;
+}
+
+.admin-react-main {
+    min-width: 0;
+    padding: 40px clamp(24px, 4vw, 56px) 60px;
+}
+
+.admin-react-topbar {
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.admin-react-topbar > div:first-child > span,
+.admin-react-panel-title > div > span {
+    color: var(--admin-green);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.admin-react-topbar h1 {
+    font-family: Manrope, sans-serif;
+    font-size: clamp(29px, 3vw, 38px);
+    letter-spacing: -.05em;
+    margin: 6px 0;
+}
+
+.admin-react-topbar p {
+    color: var(--admin-muted);
+    font-size: 12px;
+    margin: 0;
+}
+
+.admin-react-actions {
+    align-items: center;
+    display: flex;
+    gap: 9px;
+}
+
+.admin-react-actions a,
+.admin-react-actions button {
+    background: white;
+    border: 1px solid var(--admin-line);
+    border-radius: 10px;
+    color: var(--admin-ink);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 11px 14px;
+}
+
+.admin-react-actions a {
+    background: var(--admin-green);
+    border-color: var(--admin-green);
+    color: white;
+}
+
+.admin-react-kpis {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin-bottom: 22px;
+}
+
+.admin-react-kpis article {
+    background: white;
+    border: 1px solid var(--admin-line);
+    border-radius: 15px;
+    display: grid;
+    padding: 18px;
+}
+
+.admin-react-icon {
+    align-items: center;
+    border-radius: 10px;
+    display: flex;
+    height: 37px;
+    justify-content: center;
+    margin-bottom: 18px;
+    width: 37px;
+}
+
+.admin-react-icon-green { background: #ddf1ec; color: #18786f; }
+.admin-react-icon-amber { background: #faecd5; color: #a67127; }
+.admin-react-icon-blue { background: #e3edf7; color: #47759a; }
+.admin-react-icon-purple { background: #eee5f3; color: #7c5888; }
+.admin-react-icon-coral { background: #f8e5df; color: #a65f4b; }
+
+.admin-react-kpis article > span {
+    color: var(--admin-muted);
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.admin-react-kpis article > strong {
+    font-family: Manrope, sans-serif;
+    font-size: 31px;
+    letter-spacing: -.04em;
+    margin-top: 3px;
+}
+
+.admin-react-grid {
+    display: grid;
+    gap: 22px;
+    grid-template-columns: minmax(280px, .72fr) minmax(0, 1.28fr);
+}
+
+.admin-react-panel {
+    background: white;
+    border: 1px solid var(--admin-line);
+    border-radius: 16px;
+    min-width: 0;
+    padding: 22px;
+}
+
+.admin-react-panel-title {
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.admin-react-panel-title > div {
+    display: grid;
+    gap: 4px;
+}
+
+.admin-react-panel-title h2 {
+    font-family: Manrope, sans-serif;
+    font-size: 18px;
+    letter-spacing: -.03em;
+    margin: 0;
+}
+
+.admin-react-panel-title > a {
+    align-items: center;
+    color: var(--admin-green);
+    display: flex;
+    font-size: 9px;
+    font-weight: 800;
+    gap: 5px;
+}
+
+.admin-react-panel-title > a svg {
+    height: 13px;
+    width: 13px;
+}
+
+.admin-react-user-list {
+    display: grid;
+}
+
+.admin-react-user-list > div {
+    align-items: center;
+    border-top: 1px solid var(--admin-line);
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 35px 1fr auto;
+    padding: 13px 0;
+}
+
+.admin-react-user-list > div:first-child {
+    border-top: 0;
+}
+
+.admin-react-list-avatar {
+    align-items: center;
+    background: #e8f1ef;
+    border-radius: 50%;
+    color: var(--admin-green);
+    display: flex;
+    font-size: 9px;
+    font-weight: 800;
+    height: 35px;
+    justify-content: center;
+    width: 35px;
+}
+
+.admin-react-user-list > div > div {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.admin-react-user-list strong {
+    font-size: 11px;
+}
+
+.admin-react-user-list small {
+    color: var(--admin-muted);
+    font-size: 9px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.admin-react-user-list time {
+    color: #99a6a4;
+    font-size: 8px;
+}
+
+.admin-react-table-wrap {
+    overflow-x: auto;
+}
+
+.admin-react-table-wrap table {
+    border-collapse: collapse;
+    min-width: 680px;
+    width: 100%;
+}
+
+.admin-react-table-wrap th {
+    color: #8a9997;
+    font-size: 8px;
+    letter-spacing: .08em;
+    padding: 10px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.admin-react-table-wrap td {
+    border-top: 1px solid var(--admin-line);
+    color: var(--admin-muted);
+    font-size: 9px;
+    padding: 14px 10px;
+}
+
+.admin-react-table-wrap td strong {
+    color: var(--admin-ink);
+    font-size: 10px;
+}
+
+.admin-react-status {
+    border-radius: 99px;
+    display: inline-flex;
+    font-size: 7px;
+    font-weight: 800;
+    padding: 6px 8px;
+    text-transform: uppercase;
+}
+
+.admin-react-status.status-scheduled { background: #e5edf6; color: #486d8d; }
+.admin-react-status.status-confirmed { background: #dcf1ec; color: #19766d; }
+.admin-react-status.status-completed { background: #e7f0df; color: #557b37; }
+.admin-react-status.status-cancelled,
+.admin-react-status.status-no_show { background: #f5e5e2; color: #9b594b; }
+
+.admin-react-empty {
+    align-items: center;
+    color: var(--admin-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    min-height: 230px;
+    text-align: center;
+}
+
+.admin-react-empty strong {
+    color: var(--admin-ink);
+    font-size: 12px;
+}
+
+.admin-react-empty span {
+    font-size: 10px;
+}
+
+@media (max-width: 1120px) {
+    .admin-react-kpis {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .admin-react-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    .admin-react-page {
+        display: block;
+    }
+
+    .admin-react-sidebar {
+        align-items: center;
+        flex-direction: row;
+        min-height: auto;
+        padding: 12px 16px;
+    }
+
+    .admin-react-brand {
+        padding: 0;
+    }
+
+    .admin-react-brand strong,
+    .admin-react-section-label,
+    .admin-react-user {
+        display: none;
+    }
+
+    .admin-react-sidebar nav {
+        display: flex;
+        margin-left: auto;
+    }
+
+    .admin-react-sidebar nav a {
+        font-size: 0;
+        padding: 10px;
+    }
+
+    .admin-react-main {
+        padding: 28px 18px 50px;
+    }
+
+    .admin-react-topbar {
+        align-items: flex-start;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 560px) {
+    .admin-react-topbar {
+        display: grid;
+    }
+
+    .admin-react-kpis {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
