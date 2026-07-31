@@ -1,0 +1,111 @@
+/* Doctor dashboard only: resources/js/react/pages/DoctorDashboardPage.jsx */
+@import url('https://fonts.bunny.net/css?family=dm-sans:400,500,600,700|manrope:500,600,700,800');
+
+:root {
+    --doctor-ink: #17302e;
+    --doctor-muted: #72827f;
+    --doctor-green: #1b8277;
+    --doctor-bg: #f2f6f4;
+    --doctor-line: #e0e8e5;
+}
+
+body { margin: 0; }
+.doctor-react-page, .doctor-react-page * { box-sizing: border-box; }
+.doctor-react-page { background: var(--doctor-bg); color: var(--doctor-ink); display: grid; font-family: "DM Sans", sans-serif; grid-template-columns: 230px minmax(0, 1fr); min-height: 100vh; }
+.doctor-react-page a { color: inherit; text-decoration: none; }
+.doctor-react-page svg { fill: none; height: 19px; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; width: 19px; }
+
+.doctor-react-sidebar { background: #112e2b; color: white; display: flex; flex-direction: column; min-height: 100vh; padding: 27px 18px 22px; }
+.doctor-react-brand { align-items: center; display: flex; font-family: Manrope, sans-serif; font-size: 18px; gap: 11px; letter-spacing: -.04em; padding: 0 9px 38px; }
+.doctor-react-brand > span { align-items: center; background: #daf1ec; border-radius: 10px; color: #14685f; display: flex; font-size: 10px; height: 36px; justify-content: center; width: 36px; }
+.doctor-react-sidebar nav { display: grid; gap: 5px; }
+.doctor-react-sidebar nav a { align-items: center; border-radius: 10px; color: #a8bebb; display: flex; font-size: 12px; font-weight: 600; gap: 11px; padding: 12px; }
+.doctor-react-sidebar nav a:hover, .doctor-react-sidebar nav a.active { background: rgba(255,255,255,.1); color: white; }
+.doctor-react-profile { align-items: center; border-top: 1px solid rgba(255,255,255,.12); display: flex; gap: 10px; margin-top: auto; padding: 18px 7px 0; }
+.doctor-react-profile > span { align-items: center; background: #daf1ec; border-radius: 50%; color: #14685f; display: flex; font-size: 10px; font-weight: 800; height: 37px; justify-content: center; width: 37px; }
+.doctor-react-profile > div { display: grid; gap: 2px; min-width: 0; }
+.doctor-react-profile strong { font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.doctor-react-profile small { color: #829c97; font-size: 9px; }
+
+.doctor-react-main { min-width: 0; padding: 40px clamp(24px, 4vw, 58px) 60px; }
+.doctor-react-header { align-items: flex-end; display: flex; justify-content: space-between; margin-bottom: 30px; }
+.doctor-react-header > div > span, .doctor-react-panel-heading > div > span { color: var(--doctor-green); font-size: 9px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.doctor-react-header h1 { font-family: Manrope, sans-serif; font-size: clamp(29px, 3vw, 38px); letter-spacing: -.05em; margin: 6px 0; }
+.doctor-react-header p { color: var(--doctor-muted); font-size: 12px; margin: 0; }
+.doctor-react-header button { background: white; border: 1px solid var(--doctor-line); border-radius: 10px; color: var(--doctor-ink); cursor: pointer; font-family: inherit; font-size: 11px; font-weight: 700; padding: 11px 14px; }
+.doctor-react-flash { border-radius: 11px; font-size: 11px; font-weight: 700; margin: -10px 0 20px; padding: 12px 14px; }
+.doctor-react-flash.success { background: #dff1ec; color: #176c64; }
+.doctor-react-flash.error { background: #f6e4e1; color: #954f43; }
+
+.doctor-react-kpis { display: grid; gap: 15px; grid-template-columns: repeat(4, 1fr); margin-bottom: 22px; }
+.doctor-react-kpis article { background: white; border: 1px solid var(--doctor-line); border-radius: 16px; display: grid; padding: 19px; }
+.doctor-react-kpi-icon { align-items: center; border-radius: 10px; display: flex; height: 39px; justify-content: center; margin-bottom: 18px; width: 39px; }
+.doctor-react-kpi-icon.tone-teal { background: #dcefeb; color: #19786f; }
+.doctor-react-kpi-icon.tone-blue { background: #e2edf7; color: #4a7599; }
+.doctor-react-kpi-icon.tone-amber { background: #f8ead4; color: #a36f27; }
+.doctor-react-kpi-icon.tone-purple { background: #eee5f2; color: #7c5888; }
+.doctor-react-kpis article > span { color: var(--doctor-muted); font-size: 10px; font-weight: 600; }
+.doctor-react-kpis article > strong { font-family: Manrope, sans-serif; font-size: 32px; letter-spacing: -.04em; margin: 3px 0 5px; }
+.doctor-react-kpis article > small { color: #9ba8a6; font-size: 8px; }
+
+.doctor-react-calendar-panel, .doctor-react-bookings { background: white; border: 1px solid var(--doctor-line); border-radius: 17px; margin-bottom: 22px; padding: 23px; scroll-margin-top: 20px; }
+.doctor-react-panel-heading { align-items: flex-end; display: flex; justify-content: space-between; margin-bottom: 20px; }
+.doctor-react-panel-heading > div:first-child { display: grid; gap: 4px; }
+.doctor-react-panel-heading h2 { font-family: Manrope, sans-serif; font-size: 19px; letter-spacing: -.03em; margin: 0; }
+.doctor-react-month-controls { display: flex; gap: 7px; }
+.doctor-react-month-controls button { background: white; border: 1px solid var(--doctor-line); border-radius: 9px; cursor: pointer; height: 35px; width: 35px; }
+.doctor-react-weekdays, .doctor-react-calendar-grid { display: grid; gap: 7px; grid-template-columns: repeat(7, 1fr); }
+.doctor-react-weekdays span { color: #8c9a98; font-size: 9px; font-weight: 800; padding: 7px; text-align: center; text-transform: uppercase; }
+.doctor-react-calendar-grid > a, .doctor-react-calendar-spacer { aspect-ratio: 1.35; border-radius: 10px; min-height: 60px; }
+.doctor-react-calendar-grid > a { background: #f7f9f8; border: 1px solid #edf1f0; display: flex; flex-direction: column; justify-content: space-between; padding: 9px; transition: transform .15s ease, border-color .15s ease; }
+.doctor-react-calendar-grid > a:hover { border-color: var(--doctor-green); transform: translateY(-2px); }
+.doctor-react-calendar-grid > a > span { font-size: 11px; font-weight: 700; }
+.doctor-react-calendar-grid > a > strong { font-size: 8px; }
+.doctor-react-calendar-grid > a.has-bookings { background: #dff2ed; border-color: #b9ded5; color: #146b62; }
+.doctor-react-calendar-grid > a.selected { box-shadow: inset 0 0 0 2px var(--doctor-green); }
+.doctor-react-calendar-legend { align-items: center; color: var(--doctor-muted); display: flex; font-size: 9px; gap: 7px; margin: 16px 0 0; }
+.doctor-react-calendar-legend span { background: #62b5a6; border-radius: 50%; height: 8px; width: 8px; }
+
+.doctor-react-booking-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.doctor-react-booking-grid article { border: 1px solid var(--doctor-line); border-radius: 14px; padding: 18px; }
+.doctor-react-booking-top { align-items: center; display: flex; gap: 12px; justify-content: space-between; }
+.doctor-react-booking-top h3 { font-family: Manrope, sans-serif; font-size: 15px; margin: 0; }
+.doctor-react-booking-top > span { border-radius: 99px; font-size: 7px; font-weight: 800; padding: 6px 8px; text-transform: uppercase; }
+.doctor-react-booking-top .status-scheduled { background: #e5edf6; color: #486d8d; }
+.doctor-react-booking-top .status-confirmed { background: #dcf1ec; color: #19766d; }
+.doctor-react-booking-top .status-completed { background: #e6efde; color: #567c38; }
+.doctor-react-booking-top .status-cancelled, .doctor-react-booking-top .status-no_show { background: #f5e5e2; color: #9b594b; }
+.doctor-react-booking-grid dl { display: grid; gap: 8px; margin: 16px 0; }
+.doctor-react-booking-grid dl > div { display: grid; gap: 8px; grid-template-columns: 80px 1fr; }
+.doctor-react-booking-grid dt { color: var(--doctor-muted); font-size: 9px; }
+.doctor-react-booking-grid dd { font-size: 10px; font-weight: 600; margin: 0; }
+.doctor-react-booking-actions { display: flex; flex-wrap: wrap; gap: 7px; }
+.doctor-react-booking-actions button { background: var(--doctor-green); border: 1px solid var(--doctor-green); border-radius: 8px; color: white; cursor: pointer; font-family: inherit; font-size: 9px; font-weight: 700; padding: 8px 10px; }
+.doctor-react-booking-actions button.danger { background: white; border-color: #c99084; color: #a15142; }
+.doctor-react-empty { color: var(--doctor-muted); font-size: 11px; padding: 50px 0; text-align: center; }
+
+@media (max-width: 980px) {
+    .doctor-react-kpis { grid-template-columns: repeat(2, 1fr); }
+    .doctor-react-booking-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+    .doctor-react-page { display: block; }
+    .doctor-react-sidebar { align-items: center; flex-direction: row; min-height: auto; padding: 12px 16px; }
+    .doctor-react-brand { padding: 0; }
+    .doctor-react-brand strong, .doctor-react-profile { display: none; }
+    .doctor-react-sidebar nav { display: flex; margin-left: auto; }
+    .doctor-react-sidebar nav a { font-size: 0; padding: 10px; }
+    .doctor-react-main { padding: 28px 16px 50px; }
+    .doctor-react-calendar-grid > a, .doctor-react-calendar-spacer { min-height: 45px; }
+}
+
+@media (max-width: 560px) {
+    .doctor-react-header { align-items: flex-start; display: grid; gap: 15px; }
+    .doctor-react-kpis { grid-template-columns: 1fr 1fr; }
+    .doctor-react-calendar-panel { padding: 14px; }
+    .doctor-react-weekdays, .doctor-react-calendar-grid { gap: 3px; }
+    .doctor-react-calendar-grid > a { min-height: 38px; padding: 5px; }
+    .doctor-react-calendar-grid > a > strong { font-size: 0; }
+    .doctor-react-calendar-grid > a > strong::after { content: "•"; font-size: 12px; }
+}

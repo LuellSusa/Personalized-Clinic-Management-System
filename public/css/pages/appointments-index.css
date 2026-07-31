@@ -1,0 +1,68 @@
+.appointments-history-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.appointment-history-card {
+    background: white;
+    border: 1px solid var(--clinic-border);
+    border-radius: 1rem;
+    box-shadow: var(--clinic-shadow);
+    padding: 22px;
+}
+
+.appointment-history-card.is-past {
+    background: #ecefee;
+    border-color: #d7dcda;
+    box-shadow: none;
+    color: #6f7977;
+}
+
+.appointment-history-top {
+    align-items: flex-start;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+.appointment-history-top h2 {
+    font-size: 1.05rem;
+    margin: 0 0 4px;
+}
+
+.appointment-history-status {
+    background: #dff1ed;
+    border-radius: 99px;
+    color: var(--clinic-primary-dark);
+    font-size: .7rem;
+    font-weight: 700;
+    padding: 6px 9px;
+    text-transform: uppercase;
+}
+
+.is-past .appointment-history-status {
+    background: #d5d9d8;
+    color: #626b69;
+}
+
+.appointment-history-details {
+    display: grid;
+    gap: 7px;
+    margin: 18px 0;
+}
+
+.appointment-history-details p {
+    margin: 0;
+}
+
+.appointment-history-past-note {
+    border-left: 3px solid #9ca5a3;
+    font-size: .83rem;
+    margin-top: 16px;
+    padding-left: 10px;
+}
+
+@media (max-width: 760px) {
+    .appointments-history-grid { grid-template-columns: 1fr; }
+}

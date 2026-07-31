@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:doctor')->group(function () {
         Route::get('doctor', [DoctorController::class, 'dashboard'])->name('doctor.dashboard');
+        Route::get('doctor/calendar', [DoctorController::class, 'calendar'])->name('doctor.calendar');
         Route::patch('doctor/appointments/{appointment}/status', [DoctorController::class, 'updateAppointmentStatus'])
             ->name('doctor.appointments.status');
     });
@@ -63,8 +64,10 @@ Route::middleware('auth')->group(function () {
             Route::get('appointments', [AppointmentController::class, 'index'])->name('appointments.index');
             Route::get('appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
             Route::get('appointments/{appointment}/edit', [AppointmentController::class, 'edit'])->name('appointments.edit');
+            Route::get('appointments/{appointment}/reschedule', [AppointmentController::class, 'reschedule'])->name('appointments.reschedule');
             Route::post('appointments', [AppointmentController::class, 'store'])->name('appointments.store');
             Route::put('appointments/{appointment}', [AppointmentController::class, 'update'])->name('appointments.update');
+            Route::patch('appointments/{appointment}/reschedule', [AppointmentController::class, 'storeReschedule'])->name('appointments.reschedule.store');
             Route::delete('appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
         });
     });

@@ -81,8 +81,8 @@ export default function LandingPage({ authenticated, routes }) {
                                     <strong>30</strong>
                                 </div>
                                 <div>
-                                    <strong>10:30 AM</strong>
-                                    <span>with your assigned pediatrician</span>
+                                    <strong>7:00 AM – 12:00 PM</strong>
+                                    <span>Chong Hua Medical Mall</span>
                                 </div>
                             </div>
                             <div className="landing-preview-grid">

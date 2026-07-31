@@ -12,6 +12,7 @@
         <div class="col-md-5">
             <div class="card shadow-sm">
                 <div class="card-body p-4">
+                    <a href="{{ url('/') }}" class="btn btn-sm btn-outline-secondary mb-3">&#8592; Go back</a>
                     <h2 class="mb-4">TitaClinic Login</h2>
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>

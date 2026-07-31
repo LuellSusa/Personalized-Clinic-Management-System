@@ -20,7 +20,7 @@ class ParentProfileController extends Controller
     {
         $validated = $request->validate([
             'address' => ['nullable', 'string', 'max:255'],
-            'emergency_contact' => ['nullable', 'string', 'max:255'],
+            'emergency_contact' => ['nullable', 'regex:/^[0-9]{11}$/'],
             'occupation' => ['nullable', 'string', 'max:255'],
         ]);
 

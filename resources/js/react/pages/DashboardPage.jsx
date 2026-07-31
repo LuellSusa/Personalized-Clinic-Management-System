@@ -23,16 +23,6 @@ function formatDate(value) {
     }).format(new Date(`${value}T00:00:00`));
 }
 
-function formatTime(value) {
-    const [hour, minute] = value.slice(0, 5).split(':');
-    const date = new Date();
-    date.setHours(Number(hour), Number(minute));
-    return new Intl.DateTimeFormat('en-PH', {
-        hour: 'numeric',
-        minute: '2-digit',
-    }).format(date);
-}
-
 function humanize(value) {
     return value.replaceAll('_', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
@@ -133,7 +123,7 @@ export default function DashboardPage({ user, profileComplete, kpis, appointment
                                         <div className="dashboard-appointment-info">
                                             <strong>{humanize(appointment.type)}</strong>
                                             <span>{appointment.childName} · {formatDate(appointment.date)}</span>
-                                            <small>{formatTime(appointment.startTime)}–{formatTime(appointment.endTime)}{appointment.doctorName ? ` · ${appointment.doctorName}` : ''}</small>
+                                            <small>{appointment.branchName} · {appointment.branchHours}{appointment.doctorName ? ` · ${appointment.doctorName}` : ''}</small>
                                         </div>
                                         <span className={`dashboard-status dashboard-status-${appointment.status}`}>
                                             {humanize(appointment.status)}

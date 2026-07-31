@@ -12,6 +12,7 @@
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body p-4">
+                    <a href="{{ url('/') }}" class="btn btn-sm btn-outline-secondary mb-3">&#8592; Go back</a>
                     <h2 class="mb-4">Create Parent Account</h2>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -30,7 +31,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Phone number</label>
-                                <input type="text" name="phone_number" class="form-control" value="{{ old('phone_number') }}">
+                                <input type="text" name="phone_number" class="form-control" inputmode="numeric" maxlength="11" pattern="[0-9]{11}" title="Enter exactly 11 digits" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,11)" value="{{ old('phone_number') }}">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Password</label>

@@ -5,6 +5,7 @@ Each React-rendered screen has its own component and dedicated stylesheet:
 - `LandingPage.jsx` → `resources/css/pages/landing.css`
 - `DashboardPage.jsx` → `resources/css/pages/dashboard.css`
 - `AdminDashboardPage.jsx` → `resources/css/pages/admin-dashboard.css`
+- `DoctorDashboardPage.jsx` → `resources/css/pages/doctor-dashboard.css`
 
 To add another React page:
 

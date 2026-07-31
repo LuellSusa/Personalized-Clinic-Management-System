@@ -13,6 +13,7 @@
         <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-body p-4">
+                    <a href="{{ route('children.index') }}" class="btn btn-sm btn-outline-secondary mb-3">&#8592; Go back</a>
                     <h2 class="mb-4">Add Child</h2>
                     <form method="POST" action="{{ route('children.store') }}">
                         @csrf

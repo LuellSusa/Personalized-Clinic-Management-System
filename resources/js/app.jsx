@@ -6,6 +6,7 @@ const pageLoaders = {
     landing: () => import('./react/pages/LandingPage.jsx'),
     dashboard: () => import('./react/pages/DashboardPage.jsx'),
     'admin-dashboard': () => import('./react/pages/AdminDashboardPage.jsx'),
+    'doctor-dashboard': () => import('./react/pages/DoctorDashboardPage.jsx'),
 };
 
 const rootElement = document.getElementById('react-root');

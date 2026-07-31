@@ -16,6 +16,7 @@ class Appointment extends Model
         'doctor_user_id',
         'created_by_user_id',
         'appointment_type',
+        'branch',
         'appointment_date',
         'start_time',
         'end_time',

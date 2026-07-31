@@ -22,7 +22,7 @@ class RegisterController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['nullable', 'string', 'max:20'],
+            'phone_number' => ['nullable', 'regex:/^[0-9]{11}$/'],
             'password' => ['required', 'confirmed', 'min:8'],
         ]);
 

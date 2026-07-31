@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\BranchSchedule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -65,8 +66,8 @@ class DashboardController extends Controller
                     'id' => $appointment->id,
                     'type' => $appointment->appointment_type,
                     'date' => $appointment->appointment_date->format('Y-m-d'),
-                    'startTime' => $appointment->start_time,
-                    'endTime' => $appointment->end_time,
+                    'branchName' => BranchSchedule::name($appointment->branch),
+                    'branchHours' => BranchSchedule::hours($appointment->branch),
                     'status' => $appointment->status,
                     'childName' => trim("{$appointment->child->first_name} {$appointment->child->last_name}"),
                     'doctorName' => $appointment->doctor

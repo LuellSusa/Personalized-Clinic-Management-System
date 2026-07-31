@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\Child;
 use App\Models\ParentProfile;
 use App\Models\User;
+use App\Support\BranchSchedule;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -41,6 +42,21 @@ class ClinicAccessTest extends TestCase
             ->get(route('admin.dashboard'))
             ->assertOk()
             ->assertSee('data-page="admin-dashboard"', false);
+    }
+
+    public function test_doctor_dashboard_mounts_react_and_exposes_calendar_data(): void
+    {
+        $doctor = User::factory()->create(['role' => 'doctor']);
+
+        $this->actingAs($doctor)
+            ->get(route('doctor.dashboard'))
+            ->assertOk()
+            ->assertSee('data-page="doctor-dashboard"', false);
+
+        $this->actingAs($doctor)
+            ->getJson(route('doctor.calendar', ['month' => today()->format('Y-m')]))
+            ->assertOk()
+            ->assertJsonPath('month', today()->format('Y-m'));
     }
 
     public function test_doctor_cannot_access_admin_user_management(): void
@@ -96,9 +112,8 @@ class ClinicAccessTest extends TestCase
             ->post(route('appointments.store'), [
                 'child_id' => $otherChild->id,
                 'appointment_type' => 'consultation',
-                'appointment_date' => now()->addDay()->toDateString(),
-                'start_time' => '09:00',
-                'end_time' => '09:30',
+                'branch' => 'chong_hua_medical_mall',
+                'appointment_date' => $this->nextAvailableDate('chong_hua_medical_mall'),
             ])
             ->assertRedirect(route('appointments.create'))
             ->assertSessionHasErrors('child_id');
@@ -191,7 +206,7 @@ class ClinicAccessTest extends TestCase
 
         $this->actingAs($doctor)
             ->patch(route('doctor.appointments.status', $appointment), ['status' => 'confirmed'])
-            ->assertRedirect(route('doctor.dashboard'));
+            ->assertRedirect(route('doctor.dashboard').'#doctor-bookings');
 
         $this->assertDatabaseHas('appointments', [
             'id' => $appointment->id,
@@ -199,7 +214,7 @@ class ClinicAccessTest extends TestCase
         ]);
     }
 
-    public function test_overlapping_appointments_for_the_same_doctor_are_rejected(): void
+    public function test_multiple_day_bookings_for_the_same_doctor_are_allowed_without_time_slots(): void
     {
         $doctor = User::factory()->create(['role' => 'doctor', 'status' => 'active']);
         $parent = User::factory()->create(['role' => 'parent']);
@@ -213,14 +228,81 @@ class ClinicAccessTest extends TestCase
                 'child_id' => $child->id,
                 'doctor_user_id' => $doctor->id,
                 'appointment_type' => 'consultation',
-                'appointment_date' => now()->addDay()->toDateString(),
-                'start_time' => '09:30',
-                'end_time' => '10:30',
+                'branch' => 'chong_hua_medical_mall',
+                'appointment_date' => $this->nextAvailableDate('chong_hua_medical_mall'),
+            ])
+            ->assertRedirect(route('appointments.index'));
+
+        $this->assertDatabaseCount('appointments', 2);
+        $this->assertDatabaseHas('appointments', ['start_time' => null, 'end_time' => null]);
+    }
+
+    public function test_branch_rejects_a_date_outside_its_available_weekdays(): void
+    {
+        $parent = User::factory()->create(['role' => 'parent']);
+        $profile = ParentProfile::create(['user_id' => $parent->id]);
+        $child = $this->createChild($profile, 'PAT-BRANCH-001');
+        $sunday = today()->next(0)->toDateString();
+
+        $this->actingAs($parent)
+            ->from(route('appointments.create'))
+            ->post(route('appointments.store'), [
+                'child_id' => $child->id,
+                'appointment_type' => 'consultation',
+                'branch' => 'chong_hua_medical_mall',
+                'appointment_date' => $sunday,
             ])
             ->assertRedirect(route('appointments.create'))
-            ->assertSessionHasErrors('doctor_user_id');
+            ->assertSessionHasErrors('appointment_date');
 
-        $this->assertDatabaseCount('appointments', 1);
+        $this->assertDatabaseCount('appointments', 0);
+    }
+
+    public function test_past_booking_can_be_rescheduled_while_preserving_history(): void
+    {
+        $doctor = User::factory()->create(['role' => 'doctor']);
+        $parent = User::factory()->create(['role' => 'parent']);
+        $profile = ParentProfile::create(['user_id' => $parent->id]);
+        $child = $this->createChild($profile, 'PAT-RESCHEDULE-001');
+        $appointment = $this->createAppointment($profile, $child, $doctor);
+        $appointment->update(['appointment_date' => today()->subDay(), 'status' => 'confirmed']);
+
+        $this->actingAs($parent)
+            ->patch(route('appointments.reschedule.store', $appointment), [
+                'child_id' => $child->id,
+                'doctor_user_id' => $doctor->id,
+                'appointment_type' => 'consultation',
+                'branch' => 'chong_hua_mandaue',
+                'appointment_date' => $this->nextAvailableDate('chong_hua_mandaue'),
+            ])
+            ->assertRedirect(route('appointments.index'));
+
+        $this->assertDatabaseHas('appointments', ['id' => $appointment->id, 'status' => 'no_show']);
+        $this->assertDatabaseCount('appointments', 2);
+        $this->assertDatabaseHas('appointments', [
+            'branch' => 'chong_hua_mandaue',
+            'status' => 'scheduled',
+            'start_time' => null,
+            'end_time' => null,
+        ]);
+    }
+
+    public function test_registration_phone_number_must_contain_exactly_eleven_digits(): void
+    {
+        $payload = [
+            'first_name' => 'Test',
+            'last_name' => 'Parent',
+            'email' => 'phone-test@example.test',
+            'phone_number' => '0912345678',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+        ];
+
+        $this->post(route('register'), $payload)->assertSessionHasErrors('phone_number');
+
+        $payload['phone_number'] = '09123456789';
+        $this->post(route('register'), $payload)->assertRedirect(route('login'));
+        $this->assertDatabaseHas('users', ['email' => $payload['email'], 'phone_number' => '09123456789']);
     }
 
     private function createChild(ParentProfile $profile, string $patientNumber): Child
@@ -244,10 +326,22 @@ class ClinicAccessTest extends TestCase
             'doctor_user_id' => $doctor->id,
             'created_by_user_id' => $profile->user_id,
             'appointment_type' => 'consultation',
-            'appointment_date' => now()->addDay()->toDateString(),
-            'start_time' => '09:00',
-            'end_time' => '10:00',
+            'branch' => 'chong_hua_medical_mall',
+            'appointment_date' => $this->nextAvailableDate('chong_hua_medical_mall'),
+            'start_time' => null,
+            'end_time' => null,
             'status' => 'scheduled',
         ]);
+    }
+
+    private function nextAvailableDate(string $branch): string
+    {
+        $date = today()->addDay();
+
+        while (! BranchSchedule::isAvailable($branch, $date)) {
+            $date->addDay();
+        }
+
+        return $date->toDateString();
     }
 }
